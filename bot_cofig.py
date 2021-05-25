@@ -36,11 +36,9 @@ def parsing_akkym():
     all += 'продолжение следует.'
     file_akkym += "         'Все аккуматизированные персонажи': {\n            'examples': ['все аккуматизированные персонажи','Список аккуматизированных','переисли аккуматизированных','список злодеев','все злодеи'],\n            'responses': ['" + all + "']\n        },\n"
     file_akkym += "    },}"
-    # print(file_akkym)
-
+    #print(file_akkym)
     f = open('file_akkym.txt', 'w')
-    #file_akkym.encode('utf-8')
-    f.write(file_akkym.encode('utf-8').decode('utf-8'))
+    f.write(file_akkym)
     #a = eval(file_akkym)
 
 
@@ -49,7 +47,6 @@ def parsing_kvami():
     filename = 'сиоп_квами.csv'
     file = open(filename, "r")
     data = file.read()
-    dataset = []
     rows = data.split(';";"\n')
 
     # вопросы отделили
@@ -62,14 +59,18 @@ def parsing_kvami():
             for text in q.split('?'):
                 iqs[len(iqs) - 1].append(text)
 
+    #print(iqs)
     # отделяем имя квами и ответы на вопросы
     answers = rows[1:]
     split_answers = []
     for row in answers:
-        split_answers.append([])
-        for text in row.split(';'):
-            if text:
+        if len(row) > 1:
+            split_answers.append([])
+            for text in row.split(';'):
                 split_answers[len(split_answers) - 1].append(text.replace('\n', '\\n'))
+
+    #for a in split_answers:
+    #    print(a)
 
     # отделим квами
     kvami = []
@@ -83,10 +84,8 @@ def parsing_kvami():
             answers.append(answer[2:-1])
             links.append(answer[-1])
 
-    # print(answers)
-
     # сделаем ответы на вопросы
-    q_link = ['расскажи про', 'как выглядит', 'какой характер у']
+    q_link = ['кто такой', 'как выглядит', 'какой характер у']
     file_kvami = "{'intents': {\n"
     for k, answ, l, p in zip(kvami, answers, links, person):
         for qs, an in zip(iqs, answ):
@@ -94,10 +93,6 @@ def parsing_kvami():
                 file_kvami += "        '" + qs[0] + " " + k + "': {\n            'examples': ["
                 for a in qs[:-1]:
                     file_kvami += "'" + a + " " + k + "',"
-                """if p and qs[0] == 'расскажи про':
-                    for pers in p:
-                        file_kvami += "'квами " + pers.split(' ')[0] + "',"
-                        file_kvami += "'квами " + pers + "'," """
                 file_kvami += "'" + qs[
                     len(qs) - 1] + ' ' + k + "'" + "],\n            'responses': ['" + an
                 if qs[0] in q_link:
@@ -105,7 +100,7 @@ def parsing_kvami():
                 file_kvami += "']\n        },\n"
 
     file_kvami += "    },}"
-    # print(file_kvami)
+    #print(file_kvami)
     f = open('file_kvami.txt', 'w')
     f.write(file_kvami)
     #a = eval(file_kvami)
@@ -167,7 +162,7 @@ def parsing_persons():
                 file_persons += "']\n        },\n"
 
     file_persons += "    },\n}"
-    print(file_persons)
+    #print(file_persons)
     f = open('file_persons.txt', 'w')
     f.write(file_persons)
     a = eval(file_persons)
@@ -290,8 +285,13 @@ def parsing_orusie():
                 file_oruzie += "],\n            'responses': ['" + an.replace('\n', '')
                 file_oruzie += ' [Фото](' + link + ')'
                 file_oruzie += "']\n        },\n"
+    all = 'Всё оружие: '
+    for row in oruzie:
+        all += row + ', '
+    all += 'возможно есть и другое.'
+    file_oruzie += "         'Список оружия': {\n            'examples': ['всё оружие','список оружия','переисли всё оружие','как много оружия','сколько всего оружия'],\n            'responses': ['" + all + "']\n        },\n"
     file_oruzie += "    },\n}"
-    # print(file_oruzie)
+    #print(file_oruzie)
     f = open('file_oruzie.txt', 'w')
     f.write(file_oruzie)
     #a = eval(file_oruzie)
@@ -352,8 +352,13 @@ def parsing_kamni():
             if link[1]:
                 file_kamni += ' [Фото](' + link[1] + ')'
             file_kamni += "']\n        },\n"
+    all = 'Все камни чудес: '
+    for row in kamni:
+        all += row + ', '
+    all += 'возможно есть и другие.'
+    file_kamni += "         'Список камней': {\n            'examples': ['все камни чудес','список камней чудес','переисли все камни чудес','список камней','все камни'],\n            'responses': ['" + all + "']\n        },\n"
     file_kamni += "    },\n}"
-    # print(file_kamni)
+    #print(file_kamni)
     f = open('file_kamni.txt', 'w')
     f.write(file_kamni)
     #a = eval(file_kamni)
@@ -389,7 +394,8 @@ def parsing_voprosi():
         if answer:
             file_voprosi += "        '" + question[0] + "': {\n            'examples': ["
             for q in question:
-                file_voprosi += "'" + q + "',"
+                if q:
+                    file_voprosi += "'" + q + "',"
             file_voprosi += "],\n            'responses': ["
             for a in answer:
                 file_voprosi += "'" + a
@@ -398,7 +404,7 @@ def parsing_voprosi():
                 file_voprosi += "',"
             file_voprosi += "]\n        },\n"
     file_voprosi += "    },\n}"
-    # print(file_voprosi)
+    #print(file_voprosi)
     f = open('file_voprosi.txt', 'w')
     f.write(file_voprosi)
     #a = eval(file_voprosi)

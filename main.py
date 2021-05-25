@@ -4,7 +4,6 @@ from sklearn.linear_model import LogisticRegression
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-
 BOT_CONFIG = {
     'intents': {
     },
@@ -28,13 +27,12 @@ def load_random(configs):
 
 percent = 0.1
 
-
-
-files = ['file_akkym.txt', 'file_kvami.txt', 'file_persons.txt', 'file_superpersons.txt', 'file_kamni.txt', 'file_oruzie.txt','file_voprosi.txt']
-#config_akkym = eval(open('file_akkym.txt', "r").read().encode('cp1251').decode('utf-8'))
+files = ['file_akkym.txt', 'file_kvami.txt', 'file_persons.txt', 'file_superpersons.txt', 'file_kamni.txt',
+         'file_oruzie.txt', 'file_voprosi.txt']
+# config_akkym = eval(open('file_akkym.txt', "r").read().encode('cp1251').decode('utf-8'))
 for file in files:
     data = open(file, "r", encoding='cp1251').read()
-    #print(data)
+    # print(data)
     config = eval(data)
     load_config(config)
     load_random(config)
@@ -60,7 +58,8 @@ for intent, intent_data in BOT_CONFIG['intents'].items():
 # Делаем магическую векторизацию для того что бы разделить слова
 vectorizer = CountVectorizer(ngram_range=(2, 3), analyzer="char_wb")
 X = vectorizer.fit_transform(X)
-print(vectorizer.get_feature_names())
+# print(vectorizer.get_feature_names())
+print("Обучение...")
 clf = LogisticRegression(max_iter=1000).fit(X, y)  # модель для распознования откуда вопрос
 
 
@@ -106,11 +105,14 @@ def generate_answer_by_text(question):
 
 def filter_answer(answer):
     answer = answer.replace('""', '"')
+    answer = answer.replace('""', '"')
     answer = answer.replace('??', '')
+    answer = answer.replace(' .', '.')
     if answer[0] == '"':
         answer = answer[1:]
     answer = answer.replace('." ', '. ')
     return answer
+
 
 def bot(question):
     # Генеруем подходящий по контексту ответ
@@ -124,15 +126,7 @@ def bot(question):
     return answer
 
 
-print(clf.score(X, y))
-"""
-question = None
-while question not in ['exit', 'выход']:
-    question = input()
-    answer = bot(question)
-    print(answer)
-"""
-
+print('Точность:', clf.score(X, y))
 
 
 # Define a few command handlers. These usually take the two arguments update and
@@ -140,10 +134,13 @@ while question not in ['exit', 'выход']:
 def start(update: Update, _: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     user = update.effective_user
+    answer = bot("привет")
+    update.message.reply_text(answer, parse_mode='markdown')
+    """
     update.message.reply_markdown_v2(
         fr'Hi {user.mention_markdown_v2()}\!',
         reply_markup=ForceReply(selective=True),
-    )
+    )"""
 
 
 def help_command(update: Update, _: CallbackContext) -> None:
