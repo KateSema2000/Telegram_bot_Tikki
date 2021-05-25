@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/file_akkym.txt" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/file_kamni.txt" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/file_kvami.txt" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/file_oruzie.txt" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/file_persons.txt" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/file_superpersons.txt" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/file_voprosi.txt" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/сиоп_аккуматизация.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/сиоп_вопросы.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/сиоп_камни.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/сиоп_квами.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/сиоп_оружие.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/сиоп_персонажи.csv" charset="windows-1251" />
+    <file url="file://$PROJECT_DIR$/сиоп_супергерои.csv" charset="windows-1251" />
+  </component>
+</project>
