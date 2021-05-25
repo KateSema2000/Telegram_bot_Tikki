@@ -1,7 +1,6 @@
 import random
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
-import pandas as pd
 
 BOT_CONFIG = {
     'intents': {
