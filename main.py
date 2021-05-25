@@ -1,6 +1,7 @@
 import random
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
+import pandas as pd
 
 BOT_CONFIG = {
     'intents': {
@@ -25,29 +26,16 @@ def load_random(configs):
 
 percent = 0.1
 
-config_akkym = eval(open('file_akkym.txt', "r").read())
-config_kvami = eval(open('file_kvami.txt', "r").read())
-config_persons = eval(open('file_persons.txt', "r").read())
-config_superpersons = eval(open('file_superpersons.txt', "r").read())
-config_kamni = eval(open('file_kamni.txt', "r").read())
-config_oruzie = eval(open('file_oruzie.txt', "r").read())
-config_voprosi = eval(open('file_voprosi.txt', "r").read())
 
-load_config(config_kvami)
-load_config(config_akkym)
-load_config(config_persons)
-load_config(config_superpersons)
-load_config(config_kamni)
-load_config(config_oruzie)
-load_config(config_voprosi)
 
-load_random(config_kvami)
-load_random(config_kamni)
-load_config(config_akkym)
-load_random(config_oruzie)
-load_random(config_persons)
-load_random(config_superpersons)
-load_config(config_voprosi)
+files = ['file_akkym.txt', 'file_kvami.txt', 'file_persons.txt', 'file_superpersons.txt', 'file_kamni.txt', 'file_oruzie.txt','file_voprosi.txt']
+#config_akkym = eval(open('file_akkym.txt', "r").read().encode('cp1251').decode('utf-8'))
+for file in files:
+    data = open(file, "r", encoding='cp1251').read()
+    #print(data)
+    config = eval(data)
+    load_config(config)
+    load_random(config)
 
 
 def filter_text(text):

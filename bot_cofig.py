@@ -1,4 +1,4 @@
-from csv import reader
+import codecs
 
 BOT_CONFIG = {
     'intents': {
@@ -25,7 +25,7 @@ def parsing_akkym():
                 dataset[len(dataset) - 1].append(text.replace('"', '').replace('\n', '\\n'))
 
     # формирую всех аккуматизированных
-    file_akkym += "    {'intents': {\n"
+    file_akkym += "{'intents': {\n"
     for row in dataset:
         # print("        '",row[0],"': {\n            'examples':",row[1:3],",\n            'responses': ['",row[3],"']\n        },", sep='')
         file_akkym += "        '" + row[0] + "': {\n            'examples': ['" + row[1] + "', '" + row[
@@ -39,8 +39,9 @@ def parsing_akkym():
     # print(file_akkym)
 
     f = open('file_akkym.txt', 'w')
-    f.write(file_akkym)
-    a = eval(file_akkym)
+    #file_akkym.encode('utf-8')
+    f.write(file_akkym.encode('utf-8').decode('utf-8'))
+    #a = eval(file_akkym)
 
 
 ########################## квами
@@ -86,7 +87,7 @@ def parsing_kvami():
 
     # сделаем ответы на вопросы
     q_link = ['расскажи про', 'как выглядит', 'какой характер у']
-    file_kvami = "    {'intents': {\n"
+    file_kvami = "{'intents': {\n"
     for k, answ, l, p in zip(kvami, answers, links, person):
         for qs, an in zip(iqs, answ):
             if an:
@@ -107,7 +108,7 @@ def parsing_kvami():
     # print(file_kvami)
     f = open('file_kvami.txt', 'w')
     f.write(file_kvami)
-    a = eval(file_kvami)
+    #a = eval(file_kvami)
 
 
 ########################## персы
@@ -115,6 +116,7 @@ def parsing_persons():
     filename = 'сиоп_персонажи.csv'
     file = open(filename, "r")
     data = file.read()
+
     rows = data.split(';";"\n')
 
     # вопросы отделили
@@ -149,7 +151,7 @@ def parsing_persons():
         persons.append([answer[0].split(' ')[0], answer[0]])
         links.append(answer[-1])
         answers.append(answer[1:-1])
-    # print(answers)
+
     q_link = ['расскажи про', 'как выглядит', 'характер']
     file_persons = "    {'intents': {\n"
     for person, answ, link in zip(persons, answers, links):
@@ -165,7 +167,7 @@ def parsing_persons():
                 file_persons += "']\n        },\n"
 
     file_persons += "    },\n}"
-    # print(file_persons)
+    print(file_persons)
     f = open('file_persons.txt', 'w')
     f.write(file_persons)
     a = eval(file_persons)
@@ -218,7 +220,7 @@ def parsing_superhero():
     # print(answers)
     # print(persons)
     q_link = ['расскажи про', 'как выглядит', 'какой характер у']
-    file_superpersons = "    {'intents': {\n"
+    file_superpersons = "{'intents': {\n"
     for p, answ, l, k in zip(persons, answers, links, kvami):
         for qs, an in zip(iqs, answ):
             if an:
@@ -236,7 +238,7 @@ def parsing_superhero():
     # print(file_superpersons)
     f = open('file_superpersons.txt', 'w')
     f.write(file_superpersons)
-    a = eval(file_superpersons)
+    #a = eval(file_superpersons)
 
 
 ########################## оружие
@@ -274,7 +276,7 @@ def parsing_orusie():
     # print(answers)
     # print(persons)
     questions = ['какое оружие у', 'что такое', 'какое оружие у']
-    file_oruzie = "    {'intents': {\n"
+    file_oruzie = "{'intents': {\n"
     for person, answer, link, oruzi in zip(persons, answers, links, oruzie):
         for an in answer:
             if an:
@@ -292,7 +294,7 @@ def parsing_orusie():
     # print(file_oruzie)
     f = open('file_oruzie.txt', 'w')
     f.write(file_oruzie)
-    a = eval(file_oruzie)
+    #a = eval(file_oruzie)
 
 
 ########################## камни
@@ -332,7 +334,7 @@ def parsing_kamni():
     # for link in links:
     #    print(link)
     questions = ['какое камень у', 'какой камень у оружия', 'какое оружие у']
-    file_kamni = "    {'intents': {\n"
+    file_kamni = "{'intents': {\n"
     for kvam, kamen, oruz, answer, link in zip(kvami, kamni, orusie, answers, links):
         if answer:
             file_kamni += "        '" + questions[0] + " " + kvam + "': {\n            'examples': ["
@@ -354,7 +356,7 @@ def parsing_kamni():
     # print(file_kamni)
     f = open('file_kamni.txt', 'w')
     f.write(file_kamni)
-    a = eval(file_kamni)
+    #a = eval(file_kamni)
 
 
 ########################## вопросы
@@ -382,7 +384,7 @@ def parsing_voprosi():
             answers.append(answer[1].split('?'))
             links.append(answer[2])
 
-    file_voprosi = "    {'intents': {\n"
+    file_voprosi = "{'intents': {\n"
     for question, answer, link in zip(questions, answers, links):
         if answer:
             file_voprosi += "        '" + question[0] + "': {\n            'examples': ["
@@ -399,8 +401,7 @@ def parsing_voprosi():
     # print(file_voprosi)
     f = open('file_voprosi.txt', 'w')
     f.write(file_voprosi)
-    a = eval(file_voprosi)
-
+    #a = eval(file_voprosi)
 
 parsing_persons()
 parsing_superhero()
