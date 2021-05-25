@@ -1,6 +1,9 @@
 import random
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
+from telegram import Update, ForceReply
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+
 
 BOT_CONFIG = {
     'intents': {
@@ -130,8 +133,6 @@ while question not in ['exit', 'выход']:
     print(answer)
 """
 
-from telegram import Update, ForceReply
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 
 # Define a few command handlers. These usually take the two arguments update and
