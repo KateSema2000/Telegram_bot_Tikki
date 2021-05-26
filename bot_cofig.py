@@ -404,7 +404,7 @@ def parsing_voprosi():
                 file_voprosi += "',"
             file_voprosi += "]\n        },\n"
     file_voprosi += "    },\n}"
-    #print(file_voprosi)
+    print(file_voprosi)
     f = open('file_voprosi.txt', 'w')
     f.write(file_voprosi)
     #a = eval(file_voprosi)

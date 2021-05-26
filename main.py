@@ -9,8 +9,8 @@ BOT_CONFIG = {
     },
     'random_phrases': [],
     'failure_phrases': [
-        'Попробуйте написать по другому.', 'Что-то непонятно',
-        'Возможно я не знаю.',
+        'Я не могу понять ваш вопрос, попробуйте написать по другому', 'Что-то непонятно, сформулируй по другому',
+        'Возможно я не знаю такой информации, спроси что то близкое по теме',
     ]
 }
 
@@ -110,6 +110,8 @@ def filter_answer(answer):
     answer = answer.replace(' .', '.')
     if answer[0] == '"':
         answer = answer[1:]
+    if answer[-1] == '"':
+        answer = answer[:-1]
     answer = answer.replace('." ', '. ')
     return answer
 
@@ -119,6 +121,7 @@ def bot(question):
     question = filter_text(question)
     answer = generate_answer_by_text(question)
     if answer:
+        answer = filter_answer(answer)
         answer = filter_answer(answer)
         return answer
     # Используем заглушку
